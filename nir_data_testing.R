@@ -44,9 +44,7 @@ features <- data[, -c(1, 2)]
 features_scaled <-scale(features)
 ```
 ##Preprocessing with Spectra Plot 
-🚨️ To do:smooth the spectra plot 
-What is a Spectra Plot ? 
-It allows for us to examine the clynic structure (frequnecy) of a time series. A time series represents a progression of some parameter of time. 
+#What is a Spectra Plot ? It allows for us to examine the clynic structure (frequnecy) of a time series. A time series represents a progression of some parameter of time. 
 #prime technique used in statistics and data analytics for determining cylcic nature of one-time series in frequency domain
 
 
