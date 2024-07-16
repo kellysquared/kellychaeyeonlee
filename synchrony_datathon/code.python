@@ -1,0 +1,45 @@
+import pandas as pd
+import datetime
+
+# helper functions
+
+# function to take timestamp in "timestamp_call_key" and turn into python date object
+def transform_timestamp(row):
+    date_string = row["timestamp_call_key"].split()[0]
+    year = 2000 + int(date_string[0:2])
+    month = int(date_string[2:4])
+    day = int(date_string[5:6])
+    hour = int(date_string[6:8])
+    minute = int(date_string[8:10])
+    second = int(date_string[10:12])
+
+    row_date = datetime.datetime(year, month, day, hour, minute, second)
+    return row_date
+
+
+def transform_open_date(row):
+  date_string = row["account_open_date_13_march"]
+  date_arr = [int(i) for i in date_string.split('/')]
+  row_date = datetime.datetime(date_arr[2], date_arr[0], date_arr[1])
+  return row_date
+
+  #df1 = pd.read_csv("file_3_Mar18_Output_1.csv")
+df2 = pd.read_csv("/file_4_Mar18_Output_1.csv")
+
+#df_merged = pd.concat([df1, df2], ignore_index=True, sort=False)
+
+df2.head()
+
+
+# convert the eservice_ind_13_march and ebill_enrolled_status_13_march to boolean
+df1['eservice_ind_18_march'] = df1['eservice_ind_18_march'].astype(bool)
+df2['eservice_ind_18_march'] = df2['eservice_ind_18_march'].astype(bool)
+
+df_merged["date_account_opened"] = df_merged.apply(transform_open_date, axis=1)
+df_merged["call_timestamp"] = df_merged.apply(transform_timestamp, axis=1)
+df_merged = df_merged.drop(columns=["account_balance_13_march", "account_balance_18_march", "timestamp_call_key"])
+df_merged.head()
+
+
+df_merged["retailer_code"].value_counts()
+df_merged["resolved"].value_counts()
